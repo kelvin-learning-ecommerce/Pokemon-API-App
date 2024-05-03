@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pokemon_app/features/splash/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pokemon_app/presentation/locale/bloc/locale_bloc.dart';
+import 'package:pokemon_app/presentation/locale/states/locale_state.dart';
+import 'package:pokemon_app/presentation/splash/splash_screen.dart';
 
 import 'core/di/di_locator.dart';
 import 'core/router/navigation_config.dart';
 import 'core/router/provider_list.dart';
 import 'core/router/routes.dart';
-import 'features/locale/bloc/locale_bloc.dart';
-import 'features/locale/states/locale_state.dart';
 import 'generated/l10n.dart';
 
 void main() async {

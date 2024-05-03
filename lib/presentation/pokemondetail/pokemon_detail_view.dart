@@ -1,10 +1,87 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/presentation/pokemondetail/bloc/pokemon_detail_bloc.dart';
+import 'package:pokemon_app/presentation/pokemondetail/state/pokemon_detail_state.dart';
 
-class PokemonDetailView extends StatelessWidget {
-  const PokemonDetailView({Key? key}) : super(key: key);
+import 'event/pokemon_detail_event.dart';
+
+class PokemonDetailView extends StatefulWidget {
+  final int id;
+  const PokemonDetailView({Key? key, required this.id}) : super(key: key);
+
+  @override
+  State<PokemonDetailView> createState() => _PokemonDetailViewState();
+}
+
+class _PokemonDetailViewState extends State<PokemonDetailView> {
+  @override
+  void initState() {
+    super.initState();
+
+    pokemonDetailBloc?.add(PokemonDetailEventFetch(widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+      builder: (context, state) {
+        if (state is PokemonDetailStateSuccess) {
+          var result = state.data;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                result.chain?.chain?.species?.name ?? '',
+                style: const TextStyle(fontSize: 14, color: Colors.black),
+              ),
+              Container(
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  child: const Icon(CupertinoIcons.arrow_down)),
+              Expanded(
+                child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              result.chain?.chain?.evolvesTo?[index].species?.name ?? '',
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              result.chain?.chain?.evolvesTo?[0].evolvesTo?[index-1].species
+                                  ?.name ??
+                                  '',
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                    separatorBuilder: (context, index) {
+                      return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: const Icon(CupertinoIcons.arrow_down));
+                    },
+                    itemCount:
+                    (result.chain?.chain?.evolvesTo?[0].evolvesTo?.length ?? 0) + 1),
+              )
+            ],
+          );
+        }
+
+        return Container();
+      },
+    );
   }
 }

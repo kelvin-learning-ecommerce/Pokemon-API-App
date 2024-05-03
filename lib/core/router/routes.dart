@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_app/features/login/login_view.dart';
-import 'package:pokemon_app/features/pokemon/pokemon_view.dart';
-import 'package:pokemon_app/features/pokemondetail/pokemon_detail_view.dart';
-import 'package:pokemon_app/features/splash/splash_screen.dart';
+
+import '../../presentation/login/login_view.dart';
+import '../../presentation/pokemon/pokemon_view.dart';
+import '../../presentation/pokemondetail/pokemon_detail_view.dart';
+import '../../presentation/splash/splash_screen.dart';
 
 const String loginRoutes = '/LoginRoutes';
 const String pokemonDetailRoutes = '/PokemonDetailRoutes';
@@ -21,7 +22,7 @@ Route<dynamic> initRouter(RouteSettings settings) {
           settings: const RouteSettings());
     case pokemonDetailRoutes:
       return MaterialPageRoute(
-          builder: (context) => PokemonDetailView(),
+          builder: (context) => PokemonDetailView(id: settings.arguments as int,),
           settings: const RouteSettings());
     default:
       return MaterialPageRoute(builder: (context) => const SplashScreenView(), settings: const RouteSettings());

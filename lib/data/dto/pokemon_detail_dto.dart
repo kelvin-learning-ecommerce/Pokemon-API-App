@@ -14,7 +14,8 @@ class PokemonDetailDto {
       this.name,
       this.order,
       this.pastTypes,
-      this.weight);
+      this.weight,
+      this.species);
 
   // List<Abilities>? _abilities;
   @JsonKey(name: "_baseExperience")
@@ -40,8 +41,8 @@ class PokemonDetailDto {
   final int? order;
   @JsonKey(name: "_pastTypes")
   final List<dynamic>? pastTypes;
-
-  // Species? _species;
+  @JsonKey(name: "_species")
+  Species? species;
   // Sprites? _sprites;
   // List<Stats>? _stats;
   // List<Types>? _types;
@@ -54,3 +55,23 @@ class PokemonDetailDto {
 
   Map<String, dynamic> toJson() => _$PokemonDetailDtoToJson(this);
 }
+
+@JsonSerializable()
+class Species {
+
+  Species(
+      this.name,
+      this.url);
+
+  @JsonKey(name: "_name")
+  final String? name;
+  @JsonKey(name: "_url")
+  final String? url;
+
+  factory Species.fromJson(Map<String, dynamic> json) {
+    return _$SpeciesFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$SpeciesToJson(this);
+}
+

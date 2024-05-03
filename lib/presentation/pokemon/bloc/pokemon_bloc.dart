@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pokemon_app/features/pokemon/event/pokemon_event.dart';
-import 'package:pokemon_app/features/pokemon/state/pokemon_state.dart';
 
 import '../../../core/router/navigation_config.dart';
+import '../event/pokemon_event.dart';
+import '../state/pokemon_state.dart';
 
 var pokemonBloc = navigationService.navigatorKey.currentContext?.read<PokemonBloc>();
 

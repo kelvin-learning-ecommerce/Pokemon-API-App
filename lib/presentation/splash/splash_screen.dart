@@ -8,7 +8,7 @@ import 'bloc/splash_screen_bloc.dart';
 import 'event/splash_screen_event.dart';
 
 class SplashScreenView extends StatefulWidget {
-  const SplashScreenView(Key key) : super(key: key);
+  const SplashScreenView({Key? key}) : super(key: key);
 
   @override
   State<SplashScreenView> createState() => _SplashScreenViewState();
