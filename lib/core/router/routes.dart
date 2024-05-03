@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_app/features/login/login_view.dart';
+import 'package:pokemon_app/features/pokemon/pokemon_view.dart';
+import 'package:pokemon_app/features/pokemondetail/pokemon_detail_view.dart';
+import 'package:pokemon_app/features/splash/splash_screen.dart';
 
-import '../../domain/models/response/movie_response.dart';
-import '../../features/home/ui/home_view.dart';
-import '../../features/moviedetail/ui/movie_detail_view.dart';
-
-const String homeRoutes = '/HomeRoutes';
-const String newsDetailRoutes = '/NewsDetailRoutes';
+const String loginRoutes = '/LoginRoutes';
+const String pokemonDetailRoutes = '/PokemonDetailRoutes';
+const String pokemonRoutes = '/PokemonRoutes';
 const String splashRoutes = '/SplashRoutes';
 
 Route<dynamic> initRouter(RouteSettings settings) {
   switch (settings.name) {
-    case newsDetailRoutes:
+    case loginRoutes:
       return MaterialPageRoute(
-          builder: (context) => NewsDetailView(
-                args: settings.arguments as MovieResultResponse,
-              ),
+          builder: (context) => LoginView(),
+          settings: const RouteSettings());
+    case pokemonRoutes:
+      return MaterialPageRoute(
+          builder: (context) => PokemonView(),
+          settings: const RouteSettings());
+    case pokemonDetailRoutes:
+      return MaterialPageRoute(
+          builder: (context) => PokemonDetailView(),
           settings: const RouteSettings());
     default:
-      return MaterialPageRoute(builder: (context) => const HomeView(), settings: const RouteSettings());
+      return MaterialPageRoute(builder: (context) => const SplashScreenView(), settings: const RouteSettings());
   }
 }

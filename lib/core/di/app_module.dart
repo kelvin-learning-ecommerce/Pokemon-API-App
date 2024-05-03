@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/repositories/base/api_service.dart';
+import '../../data/datasource/pokemon_list_datasource.dart';
 
 @module
 abstract class AppModule {
