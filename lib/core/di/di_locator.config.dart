@@ -20,11 +20,11 @@ import 'package:pokemon_app/data/datasource/pokemon_list_datasource.dart'
 import 'package:pokemon_app/data/repository/pokemon_repository.dart' as _i11;
 import 'package:pokemon_app/domain/repository/pokemon_repository_impl.dart'
     as _i12;
-import 'package:pokemon_app/features/login/bloc/login_bloc.dart' as _i5;
-import 'package:pokemon_app/features/pokemon/bloc/pokemon_bloc.dart' as _i7;
-import 'package:pokemon_app/features/pokemondetail/bloc/pokemon_detail_bloc.dart'
+import 'package:pokemon_app/presentation/login/bloc/login_bloc.dart' as _i5;
+import 'package:pokemon_app/presentation/pokemon/bloc/pokemon_bloc.dart' as _i7;
+import 'package:pokemon_app/presentation/pokemondetail/bloc/pokemon_detail_bloc.dart'
     as _i8;
-import 'package:pokemon_app/features/splash/bloc/splash_screen_bloc.dart'
+import 'package:pokemon_app/presentation/splash/bloc/splash_screen_bloc.dart'
     as _i9;
 
 extension GetItInjectableX on _i1.GetIt {
