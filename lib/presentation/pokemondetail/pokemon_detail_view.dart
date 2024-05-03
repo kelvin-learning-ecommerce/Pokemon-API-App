@@ -1,25 +1,47 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/domain/entity/pokemon_detail_entity.dart';
 import 'package:pokemon_app/presentation/pokemondetail/bloc/pokemon_detail_bloc.dart';
+import 'package:pokemon_app/presentation/pokemondetail/components/pokemon_detail_evolution_view.dart';
 import 'package:pokemon_app/presentation/pokemondetail/state/pokemon_detail_state.dart';
 
 import 'event/pokemon_detail_event.dart';
 
 class PokemonDetailView extends StatefulWidget {
-  final int id;
-  const PokemonDetailView({Key? key, required this.id}) : super(key: key);
+  final PokemonDetailEntity detail;
+  const PokemonDetailView({Key? key, required this.detail}) : super(key: key);
 
   @override
   State<PokemonDetailView> createState() => _PokemonDetailViewState();
 }
 
-class _PokemonDetailViewState extends State<PokemonDetailView> {
+class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProviderStateMixin {
+  late TabController tabController;
+
+  var pagesList = [];
+
   @override
   void initState() {
     super.initState();
 
-    pokemonDetailBloc?.add(PokemonDetailEventFetch(widget.id));
+    pagesList = [
+      PokeDetailAboutView(
+        pokeDetail: widget.pokeDetail,
+      ),
+      PokeDetailBaseStatsView(
+        pokeDetail: widget.pokeDetail,
+      ),
+      PokemonDetailEvolutionView(
+        detail: widget.detail,
+      ),
+      PokeDetailMovesView(
+        pokeDetail: widget.pokeDetail,
+      )
+    ];
+
+    tabController = TabController(length: 4, vsync: this);
+    pokemonDetailBloc?.add(PokemonDetailEventFetch(widget.detail.id));
+
   }
 
   @override
@@ -29,55 +51,161 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
         if (state is PokemonDetailStateSuccess) {
           var result = state.data;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                result.chain?.chain?.species?.name ?? '',
-                style: const TextStyle(fontSize: 14, color: Colors.black),
-              ),
-              Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Icon(CupertinoIcons.arrow_down)),
-              Expanded(
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              result.chain?.chain?.evolvesTo?[index].species?.name ?? '',
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.black),
+          return SafeArea(
+              child: Scaffold(
+                body: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                      color: getBackgroundColor(
+                          widget.detail.types?[0].type?.name ?? ''),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.detail.name,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 35,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        var typeItem = widget.detail.types?[index];
+
+                                        return Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              color: getTypeColor(widget
+                                                  .detail.types?[0].type?.name ??
+                                                  ''),
+                                              borderRadius: BorderRadius.circular(20)),
+                                          margin:
+                                          const EdgeInsets.only(bottom: 5, right: 5),
+                                          child: Text(
+                                            typeItem?.type?.name ?? '',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: widget.detail.types?.length ?? 0,
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Text(
+                                '#00${widget.detail.id ?? 0 + 1}',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.w700),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Image.network(
+                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.pokeDetail.id ?? 0 + 1}.png',
+                            height: 150,
+                            width: 150,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Stack(
+                            fit: StackFit.passthrough,
+                            alignment: Alignment.bottomCenter,
+                            children: <Widget>[
+                              Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 15),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        width: 2.0),
+                                  ),
+                                ),
+                              ),
+                              TabBar(
+                                labelStyle: const TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w700),
+                                controller: tabController,
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                indicatorColor: Colors.blueGrey,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                labelColor: Colors.black,
+                                unselectedLabelColor: Colors.grey,
+                                onTap: (index) {
+                                  setState(() {
+                                    tabController.index = index;
+                                  });
+                                },
+                                tabs: const [
+                                  Tab(
+                                    text: 'About',
+                                  ),
+                                  Tab(
+                                    text: 'Base Stats',
+                                  ),
+                                  Tab(
+                                    text: 'Evolution',
+                                  ),
+                                  Tab(
+                                    text: 'Moves',
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 400,
+                            child: Container(
+                              margin: const EdgeInsets.all(20),
+                              child: TabBarView(
+                                physics: const BouncingScrollPhysics(),
+                                dragStartBehavior: DragStartBehavior.down,
+                                children: pagesList,
+                                controller: tabController,
+                              ),
                             ),
-                          ],
-                        );
-                      } else {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              result.chain?.chain?.evolvesTo?[0].evolvesTo?[index-1].species
-                                  ?.name ??
-                                  '',
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.black),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                    separatorBuilder: (context, index) {
-                      return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          child: const Icon(CupertinoIcons.arrow_down));
-                    },
-                    itemCount:
-                    (result.chain?.chain?.evolvesTo?[0].evolvesTo?.length ?? 0) + 1),
-              )
-            ],
-          );
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ));
         }
 
         return Container();
