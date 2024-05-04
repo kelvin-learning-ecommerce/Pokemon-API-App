@@ -1,7 +1,7 @@
 {
-  "movie_title": "Movie",
-  "home_title": "Home",
-  "cinema_tab_title": "Cinema",
+  "login_title": "Login",
+  "username_label": "Username",
+  "password_label": "Password",
   "image_unavailable": "Image Not Available",
   "empty_label": "Empty"
 }

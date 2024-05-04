@@ -1,8 +1,10 @@
 import 'package:pokemon_app/data/dto/pokemon_dto.dart';
+import 'package:pokemon_app/domain/entity/pokemon_detail_entity.dart';
 
+import '../../domain/entity/pokemon_list_entity.dart';
 import '../dto/pokemon_detail_dto.dart';
 
 abstract class PokemonRepository {
-  Future<PokemonDto> fetchPokemon();
-  Future<PokemonDetailDto> fetchPokemonDetail({required int id});
+  Future<List<PokemonListEntity>> fetchPokemon();
+  Future<PokemonDetailEntity> fetchPokemonDetail({required int id});
 }

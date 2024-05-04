@@ -50,31 +50,31 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Movie`
-  String get movie_title {
+  /// `Login`
+  String get login_title {
     return Intl.message(
-      'Movie',
-      name: 'movie_title',
+      'Login',
+      name: 'login_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Home`
-  String get home_title {
+  /// `Username`
+  String get username_label {
     return Intl.message(
-      'Home',
-      name: 'home_title',
+      'Username',
+      name: 'username_label',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cinema`
-  String get cinema_tab_title {
+  /// `Password`
+  String get password_label {
     return Intl.message(
-      'Cinema',
-      name: 'cinema_tab_title',
+      'Password',
+      name: 'password_label',
       desc: '',
       args: [],
     );

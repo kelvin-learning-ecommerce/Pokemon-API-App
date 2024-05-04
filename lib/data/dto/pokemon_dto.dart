@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pokemon_app/data/dto/data_mapper.dart';
+import 'package:pokemon_app/domain/entity/pokemon_list_entity.dart';
 
 part 'pokemon_dto.g.dart';
 
@@ -27,7 +29,7 @@ class PokemonDto {
 }
 
 @JsonSerializable()
-class PokemonResult {
+class PokemonResult extends DataMapper<PokemonListEntity>{
   PokemonResult(
       {this.name,
         this.url});
@@ -42,4 +44,9 @@ class PokemonResult {
   }
 
   Map<String, dynamic> toJson() => _$PokemonResultToJson(this);
+
+  @override
+  PokemonListEntity mapToEntity() {
+    return PokemonListEntity(name, url);
+  }
 }

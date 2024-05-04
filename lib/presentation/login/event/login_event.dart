@@ -7,6 +7,9 @@ abstract class LoginEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// class LoginEvent extends LoginEvent {
-//   const SplashScreenNextPageEvent();
-// }
+class LoginAttemptEvent extends LoginEvent {
+  const LoginAttemptEvent(this.username, this.password);
+
+  final String username;
+  final String password;
+}

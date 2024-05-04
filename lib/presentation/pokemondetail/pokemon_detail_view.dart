@@ -1,10 +1,15 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/domain/entity/pokemon_detail_entity.dart';
 import 'package:pokemon_app/presentation/pokemondetail/bloc/pokemon_detail_bloc.dart';
+import 'package:pokemon_app/presentation/pokemondetail/components/pokemon_detail_about_view.dart';
+import 'package:pokemon_app/presentation/pokemondetail/components/pokemon_detail_base_stats_view.dart';
 import 'package:pokemon_app/presentation/pokemondetail/components/pokemon_detail_evolution_view.dart';
+import 'package:pokemon_app/presentation/pokemondetail/components/pokemon_detail_moves_view.dart';
 import 'package:pokemon_app/presentation/pokemondetail/state/pokemon_detail_state.dart';
 
+import '../pokemon/pokemon_view.dart';
 import 'event/pokemon_detail_event.dart';
 
 class PokemonDetailView extends StatefulWidget {
@@ -18,25 +23,19 @@ class PokemonDetailView extends StatefulWidget {
 class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProviderStateMixin {
   late TabController tabController;
 
-  var pagesList = [];
+  List<Widget> pagesList = [];
 
   @override
   void initState() {
     super.initState();
 
     pagesList = [
-      PokeDetailAboutView(
-        pokeDetail: widget.pokeDetail,
-      ),
-      PokeDetailBaseStatsView(
-        pokeDetail: widget.pokeDetail,
-      ),
+      PokemonDetailAboutView(),
+      PokemonDetailBaseStatsView(),
       PokemonDetailEvolutionView(
         detail: widget.detail,
       ),
-      PokeDetailMovesView(
-        pokeDetail: widget.pokeDetail,
-      )
+      PokemonDetailMovesView()
     ];
 
     tabController = TabController(length: 4, vsync: this);
@@ -58,8 +57,8 @@ class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProvi
                   children: [
                     Container(
                       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                      color: getBackgroundColor(
-                          widget.detail.types?[0].type?.name ?? ''),
+                      color: getBackgroundColor("grass"),
+                          // widget.detail.chain.types?[0].type?.name ?? ''),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
