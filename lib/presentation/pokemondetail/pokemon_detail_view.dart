@@ -14,13 +14,15 @@ import 'event/pokemon_detail_event.dart';
 
 class PokemonDetailView extends StatefulWidget {
   final PokemonDetailEntity detail;
+
   const PokemonDetailView({Key? key, required this.detail}) : super(key: key);
 
   @override
   State<PokemonDetailView> createState() => _PokemonDetailViewState();
 }
 
-class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProviderStateMixin {
+class _PokemonDetailViewState extends State<PokemonDetailView>
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   List<Widget> pagesList = [];
@@ -30,17 +32,22 @@ class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProvi
     super.initState();
 
     pagesList = [
-      PokemonDetailAboutView(),
-      PokemonDetailBaseStatsView(),
+      PokemonDetailAboutView(
+        detail: widget.detail,
+      ),
+      PokemonDetailBaseStatsView(
+        detail: widget.detail,
+      ),
       PokemonDetailEvolutionView(
         detail: widget.detail,
       ),
-      PokemonDetailMovesView()
+      PokemonDetailMovesView(
+        detail: widget.detail,
+      )
     ];
 
     tabController = TabController(length: 4, vsync: this);
     pokemonDetailBloc?.add(PokemonDetailEventFetch(widget.detail.id));
-
   }
 
   @override
@@ -52,159 +59,158 @@ class _PokemonDetailViewState extends State<PokemonDetailView>  with TickerProvi
 
           return SafeArea(
               child: Scaffold(
-                body: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                      color: getBackgroundColor("grass"),
-                          // widget.detail.chain.types?[0].type?.name ?? ''),
-                      child: Column(
+            body: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                  color: getBackgroundColor("grass"),
+                  // widget.detail.chain.types?[0].type?.name ?? ''),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.detail.name,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w700),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 35,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        var typeItem = widget.detail.types?[index];
-
-                                        return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
-                                          decoration: BoxDecoration(
-                                              color: getTypeColor(widget
-                                                  .detail.types?[0].type?.name ??
-                                                  ''),
-                                              borderRadius: BorderRadius.circular(20)),
-                                          margin:
-                                          const EdgeInsets.only(bottom: 5, right: 5),
-                                          child: Text(
-                                            typeItem?.type?.name ?? '',
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        );
-                                      },
-                                      itemCount: widget.detail.types?.length ?? 0,
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                    ),
-                                  )
-                                ],
-                              ),
                               Text(
-                                '#00${widget.detail.id ?? 0 + 1}',
+                                widget.detail.name,
                                 style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 21,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.start,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                height: 35,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    var typeItem = widget.detail.types[index];
+
+                                    return Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      decoration: BoxDecoration(
+                                          color: getTypeColor(typeItem),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      margin: const EdgeInsets.only(
+                                          bottom: 5, right: 5),
+                                      child: Text(
+                                        typeItem,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    );
+                                  },
+                                  itemCount: widget.detail.types?.length ?? 0,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                ),
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Image.network(
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.pokeDetail.id ?? 0 + 1}.png',
-                            height: 150,
-                            width: 150,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Stack(
-                            fit: StackFit.passthrough,
-                            alignment: Alignment.bottomCenter,
-                            children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 15),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        width: 2.0),
-                                  ),
-                                ),
-                              ),
-                              TabBar(
-                                labelStyle: const TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w700),
-                                controller: tabController,
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                indicatorColor: Colors.blueGrey,
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                labelColor: Colors.black,
-                                unselectedLabelColor: Colors.grey,
-                                onTap: (index) {
-                                  setState(() {
-                                    tabController.index = index;
-                                  });
-                                },
-                                tabs: const [
-                                  Tab(
-                                    text: 'About',
-                                  ),
-                                  Tab(
-                                    text: 'Base Stats',
-                                  ),
-                                  Tab(
-                                    text: 'Evolution',
-                                  ),
-                                  Tab(
-                                    text: 'Moves',
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 400,
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              child: TabBarView(
-                                physics: const BouncingScrollPhysics(),
-                                dragStartBehavior: DragStartBehavior.down,
-                                children: pagesList,
-                                controller: tabController,
-                              ),
-                            ),
+                          Text(
+                            '#00${widget.detail.id ?? 0 + 1}',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 21,
+                                fontWeight: FontWeight.w700),
                           )
                         ],
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Image.network(
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.detail.id}.png',
+                        height: 150,
+                        width: 150,
+                      ),
+                    ],
+                  ),
                 ),
-              ));
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Stack(
+                        fit: StackFit.passthrough,
+                        alignment: Alignment.bottomCenter,
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    width: 2.0),
+                              ),
+                            ),
+                          ),
+                          TabBar(
+                            labelStyle: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w700),
+                            controller: tabController,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            indicatorColor: Colors.blueGrey,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelColor: Colors.black,
+                            unselectedLabelColor: Colors.grey,
+                            onTap: (index) {
+                              setState(() {
+                                tabController.index = index;
+                              });
+                            },
+                            tabs: const [
+                              Tab(
+                                text: 'About',
+                              ),
+                              Tab(
+                                text: 'Base Stats',
+                              ),
+                              Tab(
+                                text: 'Evolution',
+                              ),
+                              Tab(
+                                text: 'Moves',
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 400,
+                        child: Container(
+                          margin: const EdgeInsets.all(20),
+                          child: TabBarView(
+                            physics: const BouncingScrollPhysics(),
+                            dragStartBehavior: DragStartBehavior.down,
+                            children: pagesList,
+                            controller: tabController,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ));
         }
 
         return Container();

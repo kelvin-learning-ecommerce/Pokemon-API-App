@@ -59,7 +59,8 @@ class PokemonDetailDto extends DataMapper<PokemonDetailEntity>{
 
   @override
   PokemonDetailEntity mapToEntity() {
-    return PokemonDetailEntity(name, url, chain, id)
+    return PokemonDetailEntity(id: id ?? 0+1,
+    abilities: );
   }
 }
 

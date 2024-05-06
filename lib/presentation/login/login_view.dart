@@ -55,9 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
           context.goToPokemon();
         } else if (state is LoginStateError) {
           setState(() {
-            errorMessage = state.error == LoginError.userNotFound
-                ? S.of(context).user_not_found_error
-                : S.of(context).check_login_data_error;
+            // errorMessage = state.error == LoginError.userNotFound
+            //     ? S.of(context).user_not_found_error
+            //     : S.of(context).check_login_data_error;
           });
         }
       },
