@@ -19,36 +19,25 @@ class PokemonDetailDto extends DataMapper<PokemonDetailEntity>{
       this.weight,
       this.species);
 
-  // List<Abilities>? _abilities;
-  @JsonKey(name: "_baseExperience")
+  List<Abilities>? abilities;
   final int? baseExperience;
 
   // List<Forms>? _forms;
   // List<GameIndices>? _gameIndices;
-  @JsonKey(name: "_height")
   final int? height;
-  @JsonKey(name: "_heldItems")
   final List<dynamic>? heldItems;
-  @JsonKey(name: "_id")
   final int? id;
-  @JsonKey(name: "_isDefault")
   final bool? isDefault;
-  @JsonKey(name: "_locationAreaEncounters")
   final String? locationAreaEncounters;
 
   // List<Moves>? _moves;
-  @JsonKey(name: "_name")
   final String? name;
-  @JsonKey(name: "_order")
   final int? order;
-  @JsonKey(name: "_pastTypes")
   final List<dynamic>? pastTypes;
-  @JsonKey(name: "_species")
   Species? species;
   // Sprites? _sprites;
   // List<Stats>? _stats;
   // List<Types>? _types;
-  @JsonKey(name: "_weight")
   final int? weight;
 
   factory PokemonDetailDto.fromJson(Map<String, dynamic> json) {
@@ -59,8 +48,15 @@ class PokemonDetailDto extends DataMapper<PokemonDetailEntity>{
 
   @override
   PokemonDetailEntity mapToEntity() {
+    StringBuffer ability = StringBuffer();
+    abilities?.forEach((element) {
+      ability.write(', ${element.ability?.name}');
+      });
     return PokemonDetailEntity(id: id ?? 0+1,
-    abilities: );
+    abilities: ability.toString(),
+    height: height ?? 0,
+    weight: weight??0,
+    moves: , types: [], name: '', url: '', stats: []);
   }
 }
 
@@ -81,5 +77,35 @@ class Species {
   }
 
   Map<String, dynamic> toJson() => _$SpeciesToJson(this);
+}
+
+@JsonSerializable()
+class Abilities {
+
+  Abilities(
+      this.ability);
+
+  final Ability? ability;
+
+  factory Abilities.fromJson(Map<String, dynamic> json) {
+    return _$AbilitiesFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$AbilitiesToJson(this);
+}
+
+@JsonSerializable()
+class Ability {
+
+  Ability(
+      this.name);
+
+  final String? name;
+
+  factory Ability.fromJson(Map<String, dynamic> json) {
+    return _$AbilityFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$AbilityToJson(this);
 }
 
