@@ -23,7 +23,7 @@ Route<dynamic> initRouter(RouteSettings settings) {
           settings: const RouteSettings());
     case pokemonDetailRoutes:
       return MaterialPageRoute(
-          builder: (context) => PokemonDetailView(detail: settings.arguments as PokemonDetailEntity,),
+          builder: (context) => PokemonDetailView(id: settings.arguments as int,),
           settings: const RouteSettings());
     default:
       return MaterialPageRoute(builder: (context) => const SplashScreenView(), settings: const RouteSettings());

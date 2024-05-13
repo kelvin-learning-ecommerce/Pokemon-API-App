@@ -9,8 +9,14 @@ abstract class PokemonDetailEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class PokemonDetailEventFetch extends PokemonDetailEvent {
-  const PokemonDetailEventFetch(this.id);
+class PokemonDetailFetchEvent extends PokemonDetailEvent {
+  const PokemonDetailFetchEvent(this.id);
 
   final int id;
+}
+
+class PokemonDetailSuccessEvent extends PokemonDetailEvent {
+  const PokemonDetailSuccessEvent(this.data);
+
+  final PokemonDetailEntity data;
 }

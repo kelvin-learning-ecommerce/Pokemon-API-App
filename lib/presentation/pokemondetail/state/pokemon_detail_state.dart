@@ -8,6 +8,7 @@ abstract class PokemonDetailState extends Equatable {
 }
 
 class PokemonDetailStateInit extends PokemonDetailState {}
+class PokemonDetailLoadingState extends PokemonDetailState {}
 class PokemonDetailStateSuccess extends PokemonDetailState {
   PokemonDetailStateSuccess(this.data);
   final PokemonDetailEntity data;

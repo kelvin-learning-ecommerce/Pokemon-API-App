@@ -12,5 +12,5 @@ var providerList = [
   BlocProvider<SplashScreenBloc>(create: (_) => SplashScreenBloc()),
   BlocProvider<LoginBloc>(create: (_) => LoginBloc()),
   BlocProvider<PokemonBloc>(create: (_) => PokemonBloc(locator())),
-  BlocProvider<PokemonDetailBloc>(create: (_) => PokemonDetailBloc()),
+  BlocProvider<PokemonDetailBloc>(create: (_) => PokemonDetailBloc(locator())),
 ];

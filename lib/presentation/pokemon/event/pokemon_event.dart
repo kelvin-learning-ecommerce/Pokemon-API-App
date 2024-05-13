@@ -12,3 +12,8 @@ abstract class PokemonEvent extends Equatable {
 class LoadPokemonEvent extends PokemonEvent {
   const LoadPokemonEvent();
 }
+
+class LoadPokemonDetailEvent extends PokemonEvent {
+  const LoadPokemonDetailEvent(this.id);
+  final int id;
+}

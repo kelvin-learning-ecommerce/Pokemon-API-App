@@ -13,9 +13,9 @@ import '../pokemon/pokemon_view.dart';
 import 'event/pokemon_detail_event.dart';
 
 class PokemonDetailView extends StatefulWidget {
-  final PokemonDetailEntity detail;
+  final int id;
 
-  const PokemonDetailView({Key? key, required this.detail}) : super(key: key);
+  const PokemonDetailView({Key? key, required this.id}) : super(key: key);
 
   @override
   State<PokemonDetailView> createState() => _PokemonDetailViewState();
@@ -31,23 +31,8 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
   void initState() {
     super.initState();
 
-    pagesList = [
-      PokemonDetailAboutView(
-        detail: widget.detail,
-      ),
-      PokemonDetailBaseStatsView(
-        detail: widget.detail,
-      ),
-      PokemonDetailEvolutionView(
-        detail: widget.detail,
-      ),
-      PokemonDetailMovesView(
-        detail: widget.detail,
-      )
-    ];
-
     tabController = TabController(length: 4, vsync: this);
-    pokemonDetailBloc?.add(PokemonDetailEventFetch(widget.detail.id));
+    pokemonDetailBloc?.add(PokemonDetailFetchEvent(widget.id));
   }
 
   @override
@@ -56,6 +41,22 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
       builder: (context, state) {
         if (state is PokemonDetailStateSuccess) {
           var result = state.data;
+
+          pagesList = [
+            PokemonDetailAboutView(
+              detail: result,
+            ),
+            PokemonDetailBaseStatsView(
+              detail: result,
+            ),
+            PokemonDetailEvolutionView(
+              detail: result,
+            ),
+            PokemonDetailMovesView(
+              detail: result,
+            )
+          ];
+
 
           return SafeArea(
               child: Scaffold(
@@ -77,7 +78,7 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.detail.name,
+                                result.name,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -92,7 +93,7 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    var typeItem = widget.detail.types[index];
+                                    var typeItem = result.types[index];
 
                                     return Container(
                                       padding: const EdgeInsets.symmetric(
@@ -112,7 +113,7 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                                       ),
                                     );
                                   },
-                                  itemCount: widget.detail.types?.length ?? 0,
+                                  itemCount: result.types.length ?? 0,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                 ),
@@ -120,7 +121,7 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                             ],
                           ),
                           Text(
-                            '#00${widget.detail.id ?? 0 + 1}',
+                            '#00${result.id}',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 21,
@@ -132,7 +133,7 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                         height: 10,
                       ),
                       Image.network(
-                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.detail.id}.png',
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${result.id}.png',
                         height: 150,
                         width: 150,
                       ),
@@ -200,8 +201,8 @@ class _PokemonDetailViewState extends State<PokemonDetailView>
                           child: TabBarView(
                             physics: const BouncingScrollPhysics(),
                             dragStartBehavior: DragStartBehavior.down,
-                            children: pagesList,
                             controller: tabController,
+                            children: pagesList,
                           ),
                         ),
                       )
