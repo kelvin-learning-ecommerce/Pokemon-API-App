@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "empty_label": MessageLookupByLibrary.simpleMessage("Kosong"),
+        "google_login_title":
+            MessageLookupByLibrary.simpleMessage("Google Login"),
         "image_unavailable":
             MessageLookupByLibrary.simpleMessage("Gambar Tidak Tersedia"),
         "login_title": MessageLookupByLibrary.simpleMessage("Masuk"),

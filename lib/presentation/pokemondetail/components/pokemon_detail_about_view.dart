@@ -9,11 +9,13 @@ import '../event/pokemon_detail_event.dart';
 
 class PokemonDetailAboutView extends StatelessWidget {
   final PokemonDetailEntity detail;
-  const PokemonDetailAboutView({Key? key, required this.detail}) : super(key: key);
+
+  const PokemonDetailAboutView({Key? key, required this.detail})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ListView(
+    return ListView(
       children: [
         aboutDetailRow('Species', 'Seed'),
         aboutDetailRow('Height', '${detail.height}'),
@@ -25,14 +27,7 @@ class PokemonDetailAboutView extends StatelessWidget {
 }
 
 String abilitiesList(PokemonDetailEntity pokeDetail) {
-  StringBuffer result = StringBuffer();
-
-  // pokeDetail.abilities?.forEach((element) {
-  //   result.write(', ${element.ability?.name}');
-  // });
-
   return pokeDetail.abilities;
-    // result.toString().substring(2, result.length - 1);
 }
 
 Widget aboutDetailRow(String title, String value) {

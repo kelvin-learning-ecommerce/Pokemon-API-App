@@ -7,30 +7,30 @@ part of 'pokemon_dto.dart';
 // **************************************************************************
 
 PokemonDto _$PokemonDtoFromJson(Map<String, dynamic> json) => PokemonDto(
-      count: json['_count'] as int?,
-      next: json['_next'] as String?,
-      previous: json['_previous'],
-      results: (json['_results'] as List<dynamic>?)
+      count: json['count'] as int?,
+      next: json['next'] as String?,
+      previous: json['previous'],
+      results: (json['results'] as List<dynamic>?)
           ?.map((e) => PokemonResult.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$PokemonDtoToJson(PokemonDto instance) =>
     <String, dynamic>{
-      '_count': instance.count,
-      '_next': instance.next,
-      '_previous': instance.previous,
-      '_results': instance.results,
+      'count': instance.count,
+      'next': instance.next,
+      'previous': instance.previous,
+      'results': instance.results,
     };
 
 PokemonResult _$PokemonResultFromJson(Map<String, dynamic> json) =>
     PokemonResult(
-      name: json['_name'] as String?,
-      url: json['_url'] as String?,
+      name: json['name'] as String?,
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$PokemonResultToJson(PokemonResult instance) =>
     <String, dynamic>{
-      '_name': instance.name,
-      '_url': instance.url,
+      'name': instance.name,
+      'url': instance.url,
     };

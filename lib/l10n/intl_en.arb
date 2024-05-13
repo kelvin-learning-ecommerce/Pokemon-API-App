@@ -1,5 +1,6 @@
 {
   "login_title": "Login",
+  "google_login_title": "Google Login",
   "username_label": "Username",
   "password_label": "Password",
   "image_unavailable": "Image Not Available",

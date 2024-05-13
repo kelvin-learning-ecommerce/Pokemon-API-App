@@ -7,10 +7,11 @@ abstract class PokemonState extends Equatable {
 }
 
 class PokemonStateInit extends PokemonState {}
+class PokemonLoadingState extends PokemonState {}
 
-class PokemonStateLoad extends PokemonState {
+class LoadPokemonSuccessState extends PokemonState {
 
-  PokemonStateLoad(this.data);
+  LoadPokemonSuccessState(this.data);
 
   final List<PokemonListEntity> data;
 }

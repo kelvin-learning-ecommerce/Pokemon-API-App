@@ -17,6 +17,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
   Future<List<PokemonListEntity>> fetchPokemon() async {
     var res = await baseService.fetchPokemon();
     var entity = (res.results ?? []).map((e) => e.mapToEntity()).toList();
+    print("repository ${entity.length}");
     return entity;
   }
 

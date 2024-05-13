@@ -1,5 +1,6 @@
 {
   "login_title": "Masuk",
+  "google_login_title": "Google Login",
   "username_label": "Nama ID",
   "password_label": "Kata Sandi",
   "image_unavailable": "Gambar Tidak Tersedia",

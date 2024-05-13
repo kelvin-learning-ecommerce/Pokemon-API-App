@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "241661922227",
+    "project_id": "pokemon-api-app-5a336",
+    "storage_bucket": "pokemon-api-app-5a336.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241661922227:android:77467bb81d3d9fce0519c6",
+        "android_client_info": {
+          "package_name": "com.kelvin.pokemon_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241661922227-vbnbj90beb9vt3a2ad4paje3jenmi7it.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kelvin.pokemon_app",
+            "certificate_hash": "5cdf390730db397404e0273ff4549b9952db368f"
+          }
+        },
+        {
+          "client_id": "241661922227-b2l28voeqvotqes2dsd5bfgspr3o0u2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCFSHpgclN_nVhVikYmp8f3jH0PQ-piQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241661922227-b2l28voeqvotqes2dsd5bfgspr3o0u2o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "241661922227-vkubki9tqp84bv6ope8cqbsk9bj1fjge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kelvin.pokemon.pokemonApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

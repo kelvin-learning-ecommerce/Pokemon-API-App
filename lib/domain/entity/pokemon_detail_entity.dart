@@ -6,7 +6,6 @@ class PokemonDetailEntity {
       required this.id,
       required this.types,
       required this.name,
-      required this.url,
       required this.abilities,
       required this.height,
       required this.weight,
@@ -14,7 +13,6 @@ class PokemonDetailEntity {
       required this.moves});
 
   final String name;
-  final String url;
   final String abilities;
   final int height;
   final int weight;
@@ -26,6 +24,9 @@ class PokemonDetailEntity {
 }
 
 class StatsEntity {
-  String name = "";
-  int stats = 0;
+  StatsEntity({required this.name, required this.stats});
+
+  final String name;
+
+  final int stats;
 }

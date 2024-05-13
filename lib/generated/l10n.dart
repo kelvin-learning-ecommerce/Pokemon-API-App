@@ -60,6 +60,16 @@ class S {
     );
   }
 
+  /// `Google Login`
+  String get google_login_title {
+    return Intl.message(
+      'Google Login',
+      name: 'google_login_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Username`
   String get username_label {
     return Intl.message(

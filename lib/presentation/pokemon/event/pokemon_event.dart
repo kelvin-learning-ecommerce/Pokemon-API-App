@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
+@immutable
 abstract class PokemonEvent extends Equatable {
   const PokemonEvent();
 
@@ -7,6 +9,6 @@ abstract class PokemonEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// class LoginEvent extends LoginEvent {
-//   const SplashScreenNextPageEvent();
-// }
+class LoadPokemonEvent extends PokemonEvent {
+  const LoadPokemonEvent();
+}

@@ -46,6 +46,8 @@ dependencies:
   flutter_screenutil: ^5.7.0
   firebase_auth: ^4.16.0
   google_sign_in: ^6.1.6
+  firebase_core: ^2.24.2
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,6 @@ flutter_intl:
   enabled: true
 
 flutter_icons:
-  image_path: "assets/images/ic_swapi_movie.png"
+  image_path: "assets/images/pokeapi_ic.png"
   android: true
   ios: true

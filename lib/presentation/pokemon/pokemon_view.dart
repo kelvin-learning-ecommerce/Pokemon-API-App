@@ -4,19 +4,34 @@ import 'package:pokemon_app/presentation/pokemon/bloc/pokemon_bloc.dart';
 import 'package:pokemon_app/presentation/pokemon/state/pokemon_state.dart';
 import 'package:pokemon_app/utils/extensions/routes_ext.dart';
 
-class PokemonView extends StatelessWidget {
+import '../shared/app_bar.dart';
+import 'event/pokemon_event.dart';
+
+class PokemonView extends StatefulWidget {
   const PokemonView({Key? key}) : super(key: key);
+
+  @override
+  State<PokemonView> createState() => _PokemonViewState();
+}
+
+class _PokemonViewState extends State<PokemonView> {
+  @override
+  void initState() {
+    super.initState();
+    pokemonBloc?.add(const LoadPokemonEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Pokedex'),
-            ),
+            appBar: appBar(title: 'Pokedex'),
             body: BlocBuilder<PokemonBloc, PokemonState>(
+              buildWhen: (prevState, currState) =>
+                  currState is LoadPokemonSuccessState ||
+                  currState is PokemonLoadingState,
               builder: (context, state) {
-                if (state is PokemonStateLoad) {
+                if (state is LoadPokemonSuccessState) {
                   var result = state.data;
 
                   return Container(
@@ -26,7 +41,7 @@ class PokemonView extends StatelessWidget {
                         var item = result[index];
                         return GestureDetector(
                           onTap: () {
-                            context.goToDetail(index+1);
+                            context.goToDetail(index + 1);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10),
@@ -108,17 +123,16 @@ class PokemonView extends StatelessWidget {
                       },
                       itemCount: result.length,
                       gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10),
                     ),
                   );
                 }
                 return Container();
               },
             )));
-
   }
 }
 
